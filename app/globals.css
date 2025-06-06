@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@keyframes slide-in-bg {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.slide-in-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: white;
+  border-radius: 9999px; /* same as Tailwind rounded-full */
+  animation: slide-in-bg 0.2s ease forwards;
+  z-index: 0;
+  overflow: hidden;
+}
+
+@keyframes slideUpFadeIn {
+    0% {
+      transform: translateY(10%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+.slide-up-fade-in {
+animation: slideUpFadeIn 0.5s ease-out forwards;
+}
+
+body {
+  background: linear-gradient(to bottom right, #000000, #020049); /* Light gradient */
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+  font-family: 'RedditSansCondensed';
+  src: url('/RedditSansCondensed-VariableFont_wght.ttf') format('truetype'); /* Adjust the path as necessary */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+label,
+option,
+p{
+  font-family: 'RedditSansCondensed' !important;
+}
