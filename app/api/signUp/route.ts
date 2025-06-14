@@ -20,16 +20,11 @@ export async function POST(req: NextRequest) {
     const otpValue = generateOTP();
     const encryptedPass = encrypt(password);
 
-    const [checkIfExistsQuery]: any = await pool.query(`SELECT * FROM users WHERE email = ?`, [email]);
+    const [checkIfExistsQuery]:any[] = await pool.query(`SELECT * FROM users WHERE email = ?`, [email]);
 
     if (checkIfExistsQuery && checkIfExistsQuery.length > 0) {
       return NextResponse.json({ error: 'User already exists' });
     } else {
-      const [insertQuery] = await pool.query(
-        `INSERT INTO users(username, password, email, user_id) VALUES (?, ?, ?, ?)`,
-        [username, encryptedPass, email, uuid]
-      );
-
       const [otpQuery] = await pool.query(
         `INSERT INTO otp(user_id, otp_value) VALUES (?, ?)`,
         [uuid, otpValue]
@@ -50,7 +45,12 @@ export async function POST(req: NextRequest) {
           const result = await response.json();
           console.log(result);
 
-          return NextResponse.json({user_id: uuid, username: username, access_level: 1});
+          return NextResponse.json({user_id: uuid, username: username, access_level: 1, user_metadata: {
+            username,
+            encryptedPass,
+            email,
+            uuid,
+          }});
         };
 
         return await sendEmail(); // ⬅️ fix: ensure response is returned

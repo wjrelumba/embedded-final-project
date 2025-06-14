@@ -1,12 +1,13 @@
 'use client';
 import checkAccessLevel from '@/app/Functions/AccessLevelChecker';
 import { usePathname, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const accessLevel = checkAccessLevel();
+
+  const [accessLevel, setAccessLevel] = useState<any>(1);
 
   const goToHistory = () => {
     router.push('/pages/dashboard/logs');
@@ -20,6 +21,13 @@ export default function Navbar() {
     sessionStorage.clear();
     router.push('/pages/homepage');
   };
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+      setAccessLevel(checkAccessLevel());
+    }
+  }, []);
+
 
   return (
     <div className={`${accessLevel && accessLevel == 2 ? 'w-full sm:w-1/4' : 'w-1/2'} h-[3.5rem] mt-2 p-2 sticky bottom-0 sm:hidden`}>

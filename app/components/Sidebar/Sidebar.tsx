@@ -1,12 +1,13 @@
 'use client';
 import checkAccessLevel from '@/app/Functions/AccessLevelChecker';
 import { usePathname, useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Sidebar() {
     const router = useRouter();
     const pathname = usePathname();
-    const accessLevel = checkAccessLevel();
+
+    const [accessLevel, setAccessLevel] = useState<any>(1);
 
     const goToHistory = () => {
         router.push('/pages/dashboard/logs');
@@ -20,6 +21,12 @@ export default function Sidebar() {
         sessionStorage.clear();
         router.push('/pages/homepage');
     };
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+                setAccessLevel(checkAccessLevel());
+            }
+    }, []);
   return (
     <aside className="hidden sm:block sm:w-64 bg-gray-800 p-4 shadow-md">
         <div className="text-2xl mb-4"><span className='font-bold'>Server</span>Sense</div>

@@ -1,8 +1,7 @@
 // app/api/fetchData/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '../dbConnect/dbConnect';
-import { decrypt, encrypt } from '@/app/lib/encryption';
-import { randomUUID } from 'crypto';
+import { decrypt } from '@/app/lib/encryption';
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,9 +16,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const uuid = randomUUID();
-
-    const [passwordQuery]:any = await pool.query(`SELECT * FROM users WHERE email = '${dataReceived.email}'`);
+    const [passwordQuery]:any[] = await pool.query(`SELECT * FROM users WHERE email = '${dataReceived.email}'`);
 
     if(passwordQuery && passwordQuery.length > 0){
       const decryptedPass = decrypt(passwordQuery[0].password); // Decrypt the password

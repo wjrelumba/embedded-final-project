@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 
 export default function SignUp() {
     const router = useRouter();
-    const [email, setEmail] = useState<any>(null);
-    const [username, setUsername] = useState<any>(null);
-    const [password, setPassword] = useState<any>(null);
-    const [confPassword, setConfPassword] = useState<any>(null);
+    const [email, setEmail] = useState<any | string>(null);
+    const [username, setUsername] = useState<any | string>(null);
+    const [password, setPassword] = useState<any | string>(null);
+    const [confPassword, setConfPassword] = useState<any | string>(null);
 
     const signUp = async() => {
         if(email && username && password && confPassword){
@@ -32,15 +32,18 @@ export default function SignUp() {
                     toast.error(result.error);
                 }
                 else{
-                    sessionStorage.setItem('user',JSON.stringify(result));
+                    sessionStorage.setItem('otp_mode',JSON.stringify(result.user_metadata));
                     router.push('/pages/otp');
                 }
                 console.log(result);
             }
+            else{
+                toast.error('Passwords do not match');
+            }
         }
     }
 
-    const inputHandler = (e:any) => {
+    const inputHandler = (e:any | Event) => {
         const {value, name} = e.target;
         switch(name){
             case 'username':
@@ -59,7 +62,7 @@ export default function SignUp() {
     };
 
     const checkIfUserIsLoggedIn = async() => {
-        const userSessionString:any = sessionStorage.getItem('user');
+        const userSessionString:any | string = sessionStorage.getItem('user');
         if(!userSessionString) return;
         const userSession = JSON.parse(userSessionString);
         console.log(userSession);

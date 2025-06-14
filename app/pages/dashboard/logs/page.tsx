@@ -133,7 +133,7 @@ export default function History() {
   };
   return (
     <div className='w-full h-screen flex flex-col items-center'>
-        <img className='w-[50%] sm:w-[15%] rounded-full border-[3px] border-blue-400 mb-2' src="/history.gif" alt="" />
+        <img className='w-[30%] sm:w-[15%] rounded-full border-[3px] border-blue-400 mb-2' src="/history.gif" alt="" />
 
         <div className='w-full flex flex-col items-center sm:flex-row gap-2 sm:justify-center sm:items-center p-2'>
 

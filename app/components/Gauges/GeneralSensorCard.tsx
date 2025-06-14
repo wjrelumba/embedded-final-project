@@ -2,9 +2,15 @@
 import { useState } from 'react'
 import { Gauges } from './Gauge';
 
+type ReadingValue = {
+  temperature: number;
+  humidity: number;
+  smoke_gas: number;
+}
+
 export default function GeneralSensorCard( {
   readingValues, // Values
-}: any ) {
+}: ReadingValue | any ) {
   const [importantDataValues] = useState(true);
 
   const parentClassname = 'w-full sm:h-full border-[2px] rounded-2xl p-2 border-gray-300 shadow-2xl';

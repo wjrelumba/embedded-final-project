@@ -1,7 +1,6 @@
 // app/api/fetchData/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import pool from '../dbConnect/dbConnect';
-import { randomUUID } from 'crypto';
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,7 +8,7 @@ export async function POST(req: NextRequest) {
 
     const { user_id } = dataReceived;
 
-    const [userQuery]:any = await pool.query(`SELECT * FROM users WHERE user_id = '${user_id}'`);
+    const [userQuery]:any[] = await pool.query(`SELECT * FROM users WHERE user_id = '${user_id}'`);
 
     console.log(userQuery);
 

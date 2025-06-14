@@ -1,5 +1,5 @@
 const checkAccessLevel = () => {
-        const sessionString:any = sessionStorage.getItem('user');
+        const sessionString:any | string = sessionStorage.getItem('user');
         const session:any = JSON.parse(sessionString);
 
         console.log(sessionString);

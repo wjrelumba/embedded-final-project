@@ -1,5 +1,4 @@
 'use client';
-import { error } from 'console';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -7,8 +6,8 @@ import { toast } from 'react-toastify';
 
 export default function Login() {
     const router = useRouter();
-    const [email, setEmail] = useState<any>(null);
-    const [password, setPassword] = useState<any>(null);
+    const [email, setEmail] = useState<any | string>(null);
+    const [password, setPassword] = useState<any | string>(null);
 
     const logIn = async() => {
         if(email && password){
@@ -39,7 +38,7 @@ export default function Login() {
         }
     }
 
-    const inputHandler = (e:any) => {
+    const inputHandler = (e:any | Event) => {
         const {value, name} = e.target;
         switch(name){
             case 'password':
@@ -52,7 +51,7 @@ export default function Login() {
     }
 
     const checkIfUserIsLoggedIn = async() => {
-        const userSessionString:any = sessionStorage.getItem('user');
+        const userSessionString:any|string = sessionStorage.getItem('user');
         if(!userSessionString) return;
         const userSession = JSON.parse(userSessionString);
         console.log(userSession);
